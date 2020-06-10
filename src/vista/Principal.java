@@ -35,14 +35,20 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu10 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -117,6 +123,26 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem2);
 
+        jMenuItem10.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modificarCliente.png"))); // NOI18N
+        jMenuItem10.setText("Actualizar");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem10);
+
+        jMenuItem13.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/visualizarClientes.png"))); // NOI18N
+        jMenuItem13.setText("Visualizar");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem13);
+
         jMenuBar1.add(jMenu3);
 
         jMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/prestamo.png"))); // NOI18N
@@ -153,6 +179,26 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu10.add(jMenuItem9);
 
+        jMenuItem11.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modificarServicio.png"))); // NOI18N
+        jMenuItem11.setText("Actualizar");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem11);
+
+        jMenuItem14.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/visualizarPrestamo.png"))); // NOI18N
+        jMenuItem14.setText("Visualizar");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem14);
+
         jMenuBar1.add(jMenu10);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/inversion.png"))); // NOI18N
@@ -188,6 +234,26 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(jMenuItem8);
+
+        jMenuItem12.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modificarServicio.png"))); // NOI18N
+        jMenuItem12.setText("Actualizar");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem12);
+
+        jMenuItem15.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/visualizarInversion.png"))); // NOI18N
+        jMenuItem15.setText("Visualizar");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem15);
 
         jMenuBar1.add(jMenu4);
 
@@ -251,6 +317,36 @@ public class Principal extends javax.swing.JFrame {
         centrarVentana(frp);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        FrameActualizarCliente fac = new FrameActualizarCliente();
+        centrarVentana(fac);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        FrameActualizarInversion fai = new FrameActualizarInversion();
+        centrarVentana(fai);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        FrameVisualizarPrestamo fvp = new FrameVisualizarPrestamo();
+        centrarVentana(fvp);
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        FrameVisualizarInversion fvi = new FrameVisualizarInversion();
+        centrarVentana(fvi);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        FrameVisualizarCliente fvc = new FrameVisualizarCliente();
+        centrarVentana(fvc);
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        FrameActualizarPrestamo fap = new FrameActualizarPrestamo();
+        centrarVentana(fap);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     public void centrarVentana(JInternalFrame frame){
         VentanaPrincipal.add(frame);
         Dimension dimension = VentanaPrincipal.getSize();
@@ -306,6 +402,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

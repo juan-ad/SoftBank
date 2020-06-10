@@ -114,14 +114,15 @@ public class PrestamoDAO {
         }
         return rpta;
     }
-    public Prestamo validarFiadorGarantia(int codigo){
+    public Prestamo validarFiadorGarantia(int codigo, String estado){
         
         Prestamo p = new Prestamo();
-        sql = "SELECT codPrestamo,fiador,garantia FROM prestamo WHERE codPrestamo LIKE ?";
+        sql = "SELECT codPrestamo,fiador,garantia FROM prestamo JOIN beneficio ON prestamo.idPrestamo = beneficio.idBeneficio WHERE codPrestamo LIKE ? and estado like ?";
         try{
             acceso = con.conectar();
             ps = acceso.prepareStatement(sql);
-            ps.setInt(1, codigo);
+            ps.setInt(1,codigo);
+            ps.setString(2,"%"+estado+"%");
             rs = ps.executeQuery();
             while(rs.next()){
                 p.setCodigo(rs.getInt(1));
@@ -139,19 +140,20 @@ public class PrestamoDAO {
         }
         return p;
     }
-    public String[] consultarPrestamoFiador(int codigo){
+    public String[] consultarPrestamoFiador(int codigo, String estado){
         
         String[] consulta = new String[11];
         sql = "SELECT  t1.cedula,t1.nombre, t1.apellido, t2.fechaSolicitud, t2.fechaInicio, t2.fechaTermino, "
               +"t2.interes, t2.monto, t2.estado,t2.fechaAprobacion, t3.cedula, t3.nombre, t3.apellido"
               + " FROM prestamo JOIN persona t1 ON prestamo.prestatario = t1.idPersona "
               + "JOIN beneficio t2 ON prestamo.idPrestamo = t2.idBeneficio JOIN persona t3 ON prestamo.fiador = t3.idPersona "
-              + "WHERE prestamo.codPrestamo = ?";
+              + "WHERE prestamo.codPrestamo = ? and t2.estado like ?";
         
         try{
             acceso = con.conectar();
             ps = acceso.prepareStatement(sql);
             ps.setInt(1, codigo);
+            ps.setString(2, "%"+estado+"%");
             rs = ps.executeQuery();
             while(rs.next()){
                
@@ -181,7 +183,7 @@ public class PrestamoDAO {
         return consulta;
     }
     
-    public String[] consultarPrestamoGarantia(int codigo){
+    public String[] consultarPrestamoGarantia(int codigo, String estado){
         
         String[] consulta = new String[13];
         sql = "SELECT  t1.cedula,t1.nombre, t1.apellido, t2.fechaSolicitud, t2.fechaInicio, t2.fechaTermino, "
@@ -189,12 +191,13 @@ public class PrestamoDAO {
               + " FROM prestamo JOIN persona t1 ON prestamo.prestatario = t1.idPersona "
               + "JOIN beneficio t2 ON prestamo.idPrestamo = t2.idBeneficio JOIN garantia t3 "
               + "ON prestamo.garantia = t3.idGarantia "
-              + "WHERE prestamo.codPrestamo = ?";
+              + "WHERE prestamo.codPrestamo = ? and t2.estado like ?";
         
         try{
             acceso = con.conectar();
             ps = acceso.prepareStatement(sql);
             ps.setInt(1, codigo);
+            ps.setString(2, "%"+estado+"%");
             rs = ps.executeQuery();
             while(rs.next()){
                
@@ -393,5 +396,213 @@ public class PrestamoDAO {
             }
         }
         return rpta;
+    }
+    
+    public int actualizarPrestamoFiador(Prestamo p){
+        
+        int rpta = 0;
+        sql = "UPDATE beneficio JOIN prestamo ON prestamo.idPrestamo = beneficio.idBeneficio set fechaInicio = ?, fechaTermino = ?, interes = ?, monto = ? WHERE codPrestamo = ?";
+        String sql2 = "";
+        try{
+            acceso = con.conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, p.getFechaInicio());
+            ps.setString(2, p.getFechaTermino());
+            ps.setDouble(3, p.getInteres());
+            ps.setDouble(4, p.getMonto());
+            ps.setInt(5, p.getCodigo());
+                              
+            rpta = ps.executeUpdate();
+            if(rpta != 0){
+                PreparedStatement ps2;
+                if (p.getPdf() != null){
+                
+                    sql2 = "UPDATE prestamo set pdf = ?, fiador = ? WHERE codPrestamo = ?";
+                    ps2 = acceso.prepareStatement(sql2);
+                    ps2.setBytes(1, p.getPdf());
+                    ps2.setInt(2, p.getFiador());
+                    ps2.setInt(3, p.getCodigo());
+                
+                    rpta = ps2.executeUpdate();
+                }else{
+                    
+                    sql2 = "UPDATE prestamo set fiador = ? WHERE codPrestamo = ?";
+                    ps2 = acceso.prepareStatement(sql2);
+                    ps2.setInt(1, p.getFiador());
+                    ps2.setInt(2, p.getCodigo());
+                
+                    rpta = ps2.executeUpdate();
+                }
+            }
+            acceso.close();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                acceso.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return rpta;  
+    }
+    
+    public int actualizarPrestamoGarantia(Prestamo p){
+        
+        int rpta = 0;
+        sql = "UPDATE beneficio JOIN prestamo ON prestamo.idPrestamo = beneficio.idBeneficio SET fechaInicio = ?, fechaTermino = ?, interes = ?, monto = ? WHERE codPrestamo = ?";
+        String sql2 = "UPDATE prestamo JOIN beneficio ON prestamo.idInversion = beneficio.idBeneficio set pdf = ? WHERE codPrestamo = ?";
+        try{
+            acceso = con.conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, p.getFechaInicio());
+            ps.setString(2, p.getFechaTermino());
+            ps.setDouble(3, p.getInteres());
+            ps.setDouble(4, p.getMonto());
+            ps.setInt(5, p.getCodigo());
+                              
+            rpta = ps.executeUpdate();
+            if(rpta != 0){
+                
+                if (p.getPdf() != null){
+                    PreparedStatement ps2 = acceso.prepareStatement(sql2);
+                    ps2.setBytes(1, p.getPdf());
+                    ps2.setInt(2, p.getCodigo());
+                
+                    rpta = ps2.executeUpdate();
+                }
+            }
+            acceso.close();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                acceso.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return rpta;  
+    }
+    
+    public DefaultTableModel visualizarPrestamosFiador(String estado, String cedula){
+        
+        DefaultTableModel modelo;
+        String [] titulos = {"CÓDIGO","CLIENTE","CÉDULA","F.SOLICITUD","F.INICIO","F.TERMINO","INTERÉS","MONTO","FIADOR","CÉDULA","ESTADO","F.APROBACIÓN"};
+        String [] registro = new String [12];
+        
+        modelo = new DefaultTableModel(null, titulos){
+            
+            @Override
+            public boolean isCellEditable(int filas, int columnas){
+                if(columnas== 1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        };
+                        
+        sql = "SELECT prestamo.codPrestamo,t1.nombre, t1.apellido,t1.cedula, t2.fechaSolicitud, t2.fechaInicio, t2.fechaTermino,"
+              + " t2.interes, t2.monto, t3.nombre, t3.apellido,t3.cedula, t2.estado, t2.fechaAprobacion"
+              + " FROM prestamo JOIN persona t1 ON prestamo.prestatario = t1.idPersona"
+              + " JOIN beneficio t2 ON prestamo.idPrestamo = t2.idBeneficio JOIN persona t3 ON prestamo.fiador = t3.idPersona"
+              + " WHERE t2.estado like ? and t1.cedula like ? ORDER BY prestamo.codPrestamo";
+        
+        try{
+            acceso = con.conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, "%"+estado+"%");
+            ps.setString(2, "%"+cedula+"%");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                registro[0] = rs.getString(1);
+                registro[1] = rs.getString(2)+" "+rs.getString(3);
+                registro[2] = rs.getString(4);
+                registro[3] = rs.getString(5);
+                registro[4] = rs.getString(6);
+                registro[5] = rs.getString(7);
+                registro[6] = rs.getString(8)+"%";
+                registro[7] = "$ "+rs.getString(9);
+                registro[8] = rs.getString(10)+" "+rs.getString(11);
+                registro[9] = rs.getString(12);
+                registro[10] = rs.getString(13);
+                registro[11] = rs.getString(14);
+               
+                modelo.addRow(registro);
+                
+            }
+            acceso.close();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                acceso.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return modelo;
+    }
+    
+     public DefaultTableModel visualizarPrestamosGarantia(String estado, String cedula){
+        
+        DefaultTableModel modelo;
+        String [] titulos = {"CÓDIGO","CLIENTE","CÉDULA","F.SOLICITUD","F.INICIO","F.TERMINO","INTERÉS","MONTO","GARANTÍA","VALOR","UBICACIÓN","ESTADO","F.APROBACIÓN"};
+        String [] registro = new String [13];
+        
+        modelo = new DefaultTableModel(null, titulos){
+            
+            @Override
+            public boolean isCellEditable(int filas, int columnas){
+                if(columnas== 1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        };
+                        
+         sql = "SELECT  prestamo.codPrestamo,t1.nombre, t1.apellido,t1.cedula, t2.fechaSolicitud, t2.fechaInicio, t2.fechaTermino, "
+              +"t2.interes, t2.monto, t3.tipo, t3.valor, t3.ubicacion, t2.estado, t2.fechaAprobacion "
+              + " FROM prestamo JOIN persona t1 ON prestamo.prestatario = t1.idPersona "
+              + "JOIN beneficio t2 ON prestamo.idPrestamo = t2.idBeneficio JOIN garantia t3 "
+              + "ON prestamo.garantia = t3.idGarantia WHERE t2.estado like ? and t1.cedula like ? ORDER BY prestamo.codPrestamo";
+                
+        try{
+            acceso = con.conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, "%"+estado+"%");
+            ps.setString(2, "%"+cedula+"%");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                registro[0] = rs.getString(1);
+                registro[1] = rs.getString(2)+" "+rs.getString(3);
+                registro[2] = rs.getString(4);
+                registro[3] = rs.getString(5);
+                registro[4] = rs.getString(6);
+                registro[5] = rs.getString(7);
+                registro[6] = rs.getString(8)+"%";
+                registro[7] = "$ "+rs.getString(9);
+                registro[8] = rs.getString(10);
+                registro[9] = rs.getString(11);
+                registro[10] = rs.getString(12);
+                registro[11] = rs.getString(13);
+                registro[12] = rs.getString(14);
+                           
+                modelo.addRow(registro);
+                
+            }
+            acceso.close();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                acceso.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return modelo;
     }
 }

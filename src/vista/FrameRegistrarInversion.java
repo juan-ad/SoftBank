@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -175,6 +176,14 @@ public class FrameRegistrarInversion extends javax.swing.JInternalFrame {
         jPanel2.add(comboInteres, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 180, -1));
 
         fechaInicio.setDateFormatString("yyyy/MM/dd");
+        fechaInicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fechaInicioKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fechaInicioKeyReleased(evt);
+            }
+        });
         jPanel2.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 140, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
@@ -309,26 +318,28 @@ public class FrameRegistrarInversion extends javax.swing.JInternalFrame {
             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
             JOptionPane.showMessageDialog(null,"Todos los campos son obligatorios", "Campos Vacíos", JOptionPane.INFORMATION_MESSAGE, m);
         }else{
-            inv = new Inversion();
-            inv.setCodigo(Integer.parseInt(txtCodigo.getText()));
-            inv.setFechaSolicitud(lblSolicitud.getText());
-            inv.setFechaInicio(((JTextField)fechaInicio.getDateEditor().getUiComponent()).getText());
-            inv.setFechaTermino(((JTextField)fechaTermino.getDateEditor().getUiComponent()).getText());
-            inv.setMonto(Double.parseDouble(txtMonto.getText()));
-            inv.setEstado("En proceso");
-            inv.setInversionista(c.getIdPersona());
-            String interes = formatoInversion(comboInteres.getSelectedItem().toString());
-            inv.setInteres(Double.parseDouble(interes));
-            File ruta = new File(ruta_archivo);
-            guardarPdf(ruta);
-            if(ind.registrarInversion(inv) != 0){
-                m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
-                JOptionPane.showMessageDialog(null, "INVERSIÓN REGISTRADA SATISFACTORIAMENTE", "Inversión Exitosa", JOptionPane.INFORMATION_MESSAGE, m);
-                generarCodigo();
-            }else{
-                JOptionPane.showMessageDialog(null, "NO SE  PUDO REGISTRAR");
+            if (verificarFechas() == true){
+                inv = new Inversion();
+                inv.setCodigo(Integer.parseInt(txtCodigo.getText()));
+                inv.setFechaSolicitud(lblSolicitud.getText());
+                inv.setFechaInicio(((JTextField)fechaInicio.getDateEditor().getUiComponent()).getText());
+                inv.setFechaTermino(((JTextField)fechaTermino.getDateEditor().getUiComponent()).getText());
+                inv.setMonto(Double.parseDouble(txtMonto.getText()));
+                inv.setEstado("En proceso");
+                inv.setInversionista(c.getIdPersona());
+                String interes = formatoInversion(comboInteres.getSelectedItem().toString());
+                inv.setInteres(Double.parseDouble(interes));
+                File ruta = new File(ruta_archivo);
+                guardarPdf(ruta);
+                if(ind.registrarInversion(inv) != 0){
+                    m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
+                    JOptionPane.showMessageDialog(null, "INVERSIÓN REGISTRADA SATISFACTORIAMENTE", "Inversión Exitosa", JOptionPane.INFORMATION_MESSAGE, m);
+                    generarCodigo();
+                }else{
+                    JOptionPane.showMessageDialog(null, "NO SE  PUDO REGISTRAR");
+                }
+                limpiar();
             }
-            limpiar();
         }
               
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -364,6 +375,14 @@ public class FrameRegistrarInversion extends javax.swing.JInternalFrame {
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         seleccionarPdf();
     }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void fechaInicioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaInicioKeyReleased
+ 
+    }//GEN-LAST:event_fechaInicioKeyReleased
+
+    private void fechaInicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaInicioKeyPressed
+       
+    }//GEN-LAST:event_fechaInicioKeyPressed
 
     void validarDigitos(java.awt.event.KeyEvent evt){
         char validar = evt.getKeyChar();
@@ -433,6 +452,19 @@ public class FrameRegistrarInversion extends javax.swing.JInternalFrame {
                 frc.setVisible(true);
             }
         }
+    }
+    
+    boolean verificarFechas(){
+        boolean validar = false;
+        Date fechaInicioDate = fechaInicio.getDate();
+        Date fechTerminoDate = fechaTermino.getDate();
+      
+        if (fechaInicioDate.after(fechTerminoDate)){
+            JOptionPane.showMessageDialog(null, "La fecha de término debe ser mayor a la fecha de inicio", "Fechas Incorrectas", JOptionPane.ERROR_MESSAGE);
+        }else{
+            validar = true;
+        } 
+        return validar;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeleccionar;

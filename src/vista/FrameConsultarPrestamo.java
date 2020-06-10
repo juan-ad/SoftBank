@@ -367,7 +367,7 @@ public class FrameConsultarPrestamo extends javax.swing.JInternalFrame {
             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
             JOptionPane.showMessageDialog(null, "Debe digitar el código del préstamo a consultar", "Campo de Código Vacío", JOptionPane.INFORMATION_MESSAGE, m);
         }else{
-            Prestamo p = pd.validarFiadorGarantia(Integer.parseInt(txtCodigo.getText()));
+            Prestamo p = pd.validarFiadorGarantia(Integer.parseInt(txtCodigo.getText()),"");
             
             if (p.getCodigo() == 0){
                  m = new ImageIcon(getClass().getResource("/imagenes/notFound.png"));
@@ -376,7 +376,6 @@ public class FrameConsultarPrestamo extends javax.swing.JInternalFrame {
                 visualizarPrestamo(p);
             }
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -417,7 +416,7 @@ public class FrameConsultarPrestamo extends javax.swing.JInternalFrame {
         if (p.getFiador() != 0){
             PanelCardLayout.add(PanelFiador,"fiador");
             vista.show(PanelCardLayout,"fiador");   
-            consulta = pd.consultarPrestamoFiador(Integer.parseInt(txtCodigo.getText()));
+            consulta = pd.consultarPrestamoFiador(Integer.parseInt(txtCodigo.getText()),"");
             lblCedula.setText(consulta[0]);
             lblCliente.setText(consulta[1]);
             lblSolicitud.setText(consulta[2]);
@@ -432,7 +431,7 @@ public class FrameConsultarPrestamo extends javax.swing.JInternalFrame {
         }else{
             PanelCardLayout.add(PanelGarantia,"garantia");
             vista.show(PanelCardLayout,"garantia");  
-            consulta = pd.consultarPrestamoGarantia(Integer.parseInt(txtCodigo.getText()));
+            consulta = pd.consultarPrestamoGarantia(Integer.parseInt(txtCodigo.getText()),"");
             lblCedula.setText(consulta[0]);
             lblCliente.setText(consulta[1]);
             lblSolicitud.setText(consulta[2]);

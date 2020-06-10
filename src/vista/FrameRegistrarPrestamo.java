@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -387,7 +388,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
 
         jLabel13.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel13.setText("CÓDIGO:");
-        txtubicacion.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, 30));
+        txtubicacion.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 30));
 
         btnAñadirGarantía.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnAñadirGarantía.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/añadir.png"))); // NOI18N
@@ -402,7 +403,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
                 btnAñadirGarantíaActionPerformed(evt);
             }
         });
-        txtubicacion.add(btnAñadirGarantía, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+        txtubicacion.add(btnAñadirGarantía, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
         txtUbicacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,7 +439,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         txtubicacion.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 30));
 
         txtCodigoGarantia.setEditable(false);
-        txtubicacion.add(txtCodigoGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 99, -1));
+        txtubicacion.add(txtCodigoGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 99, -1));
 
         btnCancelarGarantia.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnCancelarGarantia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancelar50px.png"))); // NOI18N
@@ -454,7 +455,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
                 btnCancelarGarantiaActionPerformed(evt);
             }
         });
-        txtubicacion.add(btnCancelarGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, -1, -1));
+        txtubicacion.add(btnCancelarGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
 
         PanelGarantia.add(txtubicacion, java.awt.BorderLayout.CENTER);
 
@@ -531,7 +532,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 50, Short.MAX_VALUE)
+                .addGap(0, 53, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
@@ -584,7 +585,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         PanelDefecto.setLayout(PanelDefectoLayout);
         PanelDefectoLayout.setHorizontalGroup(
             PanelDefectoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 298, Short.MAX_VALUE)
+            .addGap(0, 301, Short.MAX_VALUE)
         );
         PanelDefectoLayout.setVerticalGroup(
             PanelDefectoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -629,7 +630,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
             PanelFiadorGarantiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(PanelCardLayout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelFiadorGarantiaLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(54, 54, 54)
                 .addComponent(btnFiador)
                 .addGap(18, 18, 18)
                 .addComponent(btnGarantia)
@@ -769,7 +770,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         
         if (txtCedulaFiador.getText().isEmpty()){
             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
-            JOptionPane.showMessageDialog(null, "Debe digitar la cédula del cliente", "Cédula del Fiador Vacía", JOptionPane.INFORMATION_MESSAGE, m);
+            JOptionPane.showMessageDialog(null, "Debe digitar la cédula del fiador", "Cédula del Fiador Vacía", JOptionPane.INFORMATION_MESSAGE, m);
         }else{
             if(txtCedulaFiador.getText().equals(txtCedulaCliente.getText())){
                 JOptionPane.showMessageDialog(null,"El prestatario y el  fiador deben ser diferentes", "Fiador igual a Prestatario", JOptionPane.ERROR_MESSAGE);
@@ -895,18 +896,20 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         return numero;
     }
     void garantiaOfiador(Prestamo p){
-        if (btnpresionado == true){
-            m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
-            if (g == null){
-                registroPrestamoFiador();
+        if(verificarFechas() == true){
+            if (btnpresionado == true){
+                m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
+                if (g == null){
+                    registroPrestamoFiador();
+                }else{
+                    registroPrestamoGarantia();
+                }
+                limpiar();
+                limpiarFiadorGarantia();
             }else{
-                registroPrestamoGarantia();
+                m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
+                JOptionPane.showMessageDialog(null, "Debe añadir un fiador o garantía", "Falta de Fiador O Garantía", JOptionPane.ERROR_MESSAGE, m);
             }
-            limpiar();
-            limpiarFiadorGarantia();
-        }else{
-             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
-            JOptionPane.showMessageDialog(null, "Debe añadir un fiador o garantía", "Falta de Fiador O Garantía", JOptionPane.ERROR_MESSAGE, m);
         }
     }
     void registroPrestamoFiador(){
@@ -983,6 +986,19 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
             Principal.VentanaPrincipal.add(frc);
             frc.setVisible(true);
         }
+    }
+    
+    boolean verificarFechas(){
+        boolean validar = false;
+        Date fechaInicioDate = fechaInicio.getDate();
+        Date fechTerminoDate = fechaTermino.getDate();
+      
+        if (fechaInicioDate.after(fechTerminoDate)){
+            JOptionPane.showMessageDialog(null, "La fecha de término debe ser mayor a la fecha de inicio", "Fechas Incorrectas", JOptionPane.ERROR_MESSAGE);
+        }else{
+            validar = true;
+        } 
+        return validar;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelCardLayout;

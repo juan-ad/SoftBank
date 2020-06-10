@@ -61,4 +61,28 @@ public class GarantiaDAO {
         }
         return rpta;
     }
+    
+    public int actualizarGarantia(Garantia g, int codigo){
+        int rpta = 0;
+        sql = "UPDATE garantia JOIN prestamo ON garantia.idGarantia = prestamo.garantia set valor = ?, tipo = ?, ubicacion = ? WHERE prestamo.codPrestamo = ?";        
+        try{
+            acceso = con.conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setDouble(1, g.getValor());
+            ps.setString(2, g.getTipo());
+            ps.setString(3, g.getUbicacion());
+            ps.setInt(4, codigo);
+            rpta = ps.executeUpdate();
+            acceso.close();
+        }catch(SQLException ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                acceso.close();
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return rpta;
+    }
 }

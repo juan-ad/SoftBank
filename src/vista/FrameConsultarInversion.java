@@ -330,7 +330,7 @@ public class FrameConsultarInversion extends javax.swing.JInternalFrame {
            m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
            JOptionPane.showMessageDialog(null, "Debe digitar el código de la inversión a consultar", "Campo de Código Vacío", JOptionPane.INFORMATION_MESSAGE, m);
        }else{
-            String[] consulta= ind.consultarInversion(Integer.parseInt(txtCodigo.getText()));
+            String[] consulta= ind.consultarInversion(Integer.parseInt(txtCodigo.getText()),"");
             if (consulta[0] == null){
                 m = new ImageIcon(getClass().getResource("/imagenes/notFound.png"));
                JOptionPane.showMessageDialog(null, "La inversón con ese código no existe", "Inversión NO Encontrada", JOptionPane.INFORMATION_MESSAGE, m);

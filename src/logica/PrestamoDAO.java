@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -19,6 +21,7 @@ public class PrestamoDAO {
     PreparedStatement ps;
     ResultSet rs;
     String sql;
+    private static final String errorDb = "No se pudo cerrar la conexion";
     
     public int codigoSolicitud(){
         
@@ -33,12 +36,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return codigo;
@@ -69,12 +72,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -104,12 +107,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -130,12 +133,12 @@ public class PrestamoDAO {
                 p.setGarantia(rs.getInt(3));
             }          
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return p;
@@ -171,12 +174,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         
@@ -217,12 +220,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         
@@ -230,22 +233,18 @@ public class PrestamoDAO {
     }
     
     public DefaultTableModel revisarPrestamoGarantia(JTable tabla){
-        tabla.setDefaultRenderer(Object.class, new imgTabla());
+        tabla.setDefaultRenderer(Object.class, new ImgTabla());
         DefaultTableModel modelo;
               
         String [] titulos = {"idIP","CÓDIGO","CLIENTE","CÉDULA","F.SOLICITUD","F.INICIO","F.TERMINO","INTERÉS","MONTO","GARANTÍA","TIPO","VALOR","UBICACIÓN","DOCUMENTO"};
         Object [] consulta = new Object [14];
         PdfEjecucion pd = new PdfEjecucion();
-        ImageIcon icono = new ImageIcon(pd.get_Image("/imagenes/32pdf.png"));
+        ImageIcon icono = new ImageIcon(pd.getImage("/imagenes/32pdf.png"));
         modelo = new DefaultTableModel(null, titulos){
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
         
@@ -279,19 +278,19 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return modelo;
     }
     
     public DefaultTableModel revisarPrestamoFiador(JTable tabla){
-        tabla.setDefaultRenderer(Object.class, new imgTabla());
+        tabla.setDefaultRenderer(Object.class, new ImgTabla());
         DefaultTableModel modelo;
         String [] titulos = {"idIP","CÓDIGO","CLIENTE","CÉDULA","F.SOLICITUD","F.INICIO","F.TERMINO","INTERÉS","MONTO","FIADOR","CÉDULA","DOCUMENTO"};
         Object [] consulta = new Object [12];
@@ -300,15 +299,11 @@ public class PrestamoDAO {
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
         PdfEjecucion pd = new PdfEjecucion();
-        ImageIcon icono = new ImageIcon(pd.get_Image("/imagenes/32pdf.png"));
+        ImageIcon icono = new ImageIcon(pd.getImage("/imagenes/32pdf.png"));
         sql = "SELECT  prestamo.idPrestamo, prestamo.codPrestamo,t1.nombre, t1.apellido,t1.cedula, t2.fechaSolicitud, t2.fechaInicio, t2.fechaTermino,"
               + " t2.interes, t2.monto, t3.nombre, t3.apellido,t3.cedula"
               + " FROM prestamo JOIN persona t1 ON prestamo.prestatario = t1.idPersona"
@@ -337,12 +332,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return modelo;
@@ -355,19 +350,19 @@ public class PrestamoDAO {
         try{
             acceso = con.conectar();
             ps = acceso.prepareStatement(sql);
-            ps.setString(1, p.getFechaAprobación());
+            ps.setString(1, p.getFechaAprobacion());
             ps.setString(2, p.getEstado());
             ps.setInt(3, p.getIdPrestamo());
             
             rpta = ps.executeUpdate();
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -387,12 +382,12 @@ public class PrestamoDAO {
             rpta = ps.executeUpdate();
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -436,12 +431,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;  
@@ -474,12 +469,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;  
@@ -495,11 +490,7 @@ public class PrestamoDAO {
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
                         
@@ -534,12 +525,12 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return modelo;
@@ -555,11 +546,7 @@ public class PrestamoDAO {
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
                         
@@ -595,14 +582,19 @@ public class PrestamoDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+             errores(ex, ex.getMessage());
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                 errores(ex, errorDb);
             }
         }
         return modelo;
+    }
+     
+    public void errores(Exception ex, String error){
+        Logger.getLogger(getClass().getName()).log(
+        Level.WARNING, error ,ex);
     }
 }

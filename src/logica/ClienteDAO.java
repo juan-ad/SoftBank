@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class ClienteDAO {
@@ -15,6 +17,7 @@ public class ClienteDAO {
     private PreparedStatement ps;
     private ResultSet rs;
     private String sql;
+    private static final String errorDb = "No se pudo cerrar la conexion"; 
     
   
     public int registrarCliente(Cliente cli){
@@ -38,18 +41,45 @@ public class ClienteDAO {
             
             acceso.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Rgistrar Cliente");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);                
             }
         }
                 
         return rpta;
     }
     
+     public int validarCedula(String cedula){
+        
+        sql = "SELECT COUNT(*) FROM persona WHERE cedula like ?";
+        int rpta = 0;
+        try {
+            acceso = con.conectar();
+            ps = acceso.prepareStatement(sql);
+            ps.setString(1, cedula);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                rpta = rs.getInt(1);
+            }
+            acceso.close();
+        } catch (SQLException ex) {
+            errores(ex, "Error en la base de datos con validar Usuario");
+        }finally {
+            try {
+                acceso.close();
+            } catch (SQLException ex) {
+               errores(ex, errorDb);
+            }
+        }
+        
+        return rpta;
+    }
+     
     public Cliente consultarCliente(String cedula){
         
         sql = "SELECT * FROM persona JOIN cliente ON persona.idPersona = cliente.idCliente WHERE cedula like ?";
@@ -70,12 +100,12 @@ public class ClienteDAO {
             }
             acceso.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Consultar Cliente");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+               errores(ex, errorDb);
             }
         }
         
@@ -98,12 +128,12 @@ public class ClienteDAO {
             rpta = ps.executeUpdate();
             acceso.close();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Actualizar Cliente");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
                 
@@ -120,15 +150,12 @@ public class ClienteDAO {
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
                         
-        sql = "SELECT cedula, nombre, apellido, direccion, telefono FROM persona WHERE cedula like ? and apellido like ? ORDER BY idPersona";
+        sql = "SELECT cedula, nombre, apellido, direccion, telefono FROM persona JOIN cliente ON persona.idPersona = cliente.idCliente"
+              +" WHERE cedula like ? and apellido like ? ORDER BY idPersona";
               
         try{
             acceso = con.conectar();
@@ -148,14 +175,19 @@ public class ClienteDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Visualizar Cliente");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return modelo;
+    }
+    
+    public void errores(Exception ex,String error){
+        Logger.getLogger(getClass().getName()).log(
+        Level.WARNING, error ,ex);
     }
 }

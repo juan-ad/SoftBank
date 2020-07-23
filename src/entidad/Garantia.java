@@ -8,10 +8,6 @@ public class Garantia {
     private double valor;
     private String ubicacion;
     
-    public Garantia(){
-        
-    }
-
     public int getIdGarantia() {
         return idGarantia;
     }

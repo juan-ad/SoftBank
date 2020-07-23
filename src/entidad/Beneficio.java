@@ -4,17 +4,13 @@ public class Beneficio {
     
     private int idBeneficio;
     private String fechaSolicitud;
-    private String fechaAprobación;
+    private String fechaAprobacion;
     private String fechaInicio;
     private String fechaTermino;
     private double interes;
     private double monto;
     private String estado;
     
-    public Beneficio(){
-        
-    }
-
     public int getIdBeneficio() {
         return idBeneficio;
     }
@@ -31,12 +27,12 @@ public class Beneficio {
         this.fechaSolicitud = fechaSolicitud;
     }
 
-    public String getFechaAprobación() {
-        return fechaAprobación;
+    public String getFechaAprobacion() {
+        return fechaAprobacion;
     }
 
-    public void setFechaAprobación(String fechaAprobación) {
-        this.fechaAprobación = fechaAprobación;
+    public void setFechaAprobacion(String fechaAprobacion) {
+        this.fechaAprobacion = fechaAprobacion;
     }
 
     public String getFechaInicio() {

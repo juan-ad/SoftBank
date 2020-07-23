@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 public class PdfEjecucion {
@@ -20,7 +22,7 @@ public class PdfEjecucion {
     ResultSet rs;
     String sql;
     
-    public void ejecutar_archivoPDF(int id, String tipo) {// ejecuta el archivo pdf de una inversión o un préstamo
+    public void ejecutarArchivoPDF(int id, String tipo) {// ejecuta el archivo pdf de una inversión o un préstamo
         getConsulta(tipo);
         acceso = con.conectar();
         byte[] b = null;
@@ -48,16 +50,18 @@ public class PdfEjecucion {
             acceso.close();
 
         } catch (IOException | NumberFormatException | SQLException ex) {
-            System.out.println("Error al abrir archivo PDF " + ex.getMessage());
-        }
+            Logger.getLogger(getClass().getName()).log(
+            Level.WARNING, "Error al abrir archivo PDF",ex);
+        } 
     }
     
-    public  Image get_Image(String ruta) {
+    public Image getImage(String ruta) {
         try {
             ImageIcon imageIcon = new ImageIcon(getClass().getResource(ruta));
-            Image mainIcon = imageIcon.getImage();
-            return mainIcon;
-        } catch (Exception e) {
+            return imageIcon.getImage();
+        } catch (Exception ex) {
+            Logger.getLogger(getClass().getName()).log(
+            Level.WARNING, "Error al abrir imagen PDF",ex);
         }
         return null;
     }

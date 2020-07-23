@@ -8,20 +8,7 @@ public class Persona {
     private String apellido;
     private String telefono;
     private String direccion;
-
-    public Persona(){
-        
-    }
     
-    public Persona(int idPersona, String cedula, String nombre, String apellido, String telefono, String direccion) {
-        this.idPersona = idPersona;
-        this.cedula = cedula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.direccion = direccion;
-    }
-
     public int getIdPersona() {
         return idPersona;
     }

@@ -1,5 +1,6 @@
 package vista;
 
+import entidad.Usuario;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
@@ -14,8 +15,24 @@ public class Principal extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);      
         VentanaPrincipal.setBorder(new Fondo());
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/fondoPantalla.jpg")).getImage());
+        validarUsuario();
     }
- 
+    
+    
+    void validarUsuario(){
+        Usuario us = Login.usr;
+        switch (us.getRol()){
+                                           
+            case "Jefe Credito":
+                menuUsuarios.setVisible(false);
+                break;                
+            case "Auxiliar Credito":
+                menuUsuarios.setVisible(false);
+                menuItemRevisarP.setVisible(false);
+                menuItemRevisarI.setVisible(false);
+                break;
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -28,9 +45,10 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar3 = new javax.swing.JMenuBar();
         jMenu8 = new javax.swing.JMenu();
         jMenu9 = new javax.swing.JMenu();
-        VentanaPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -40,15 +58,20 @@ public class Principal extends javax.swing.JFrame {
         jMenu10 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        menuItemRevisarP = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menuItemRevisarI = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        menuUsuarios = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -73,11 +96,11 @@ public class Principal extends javax.swing.JFrame {
         VentanaPrincipal.setLayout(VentanaPrincipalLayout);
         VentanaPrincipalLayout.setHorizontalGroup(
             VentanaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 594, Short.MAX_VALUE)
+            .addGap(0, 776, Short.MAX_VALUE)
         );
         VentanaPrincipalLayout.setVerticalGroup(
             VentanaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
+            .addGap(0, 432, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -85,6 +108,26 @@ public class Principal extends javax.swing.JFrame {
         jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/menu1.png"))); // NOI18N
         jMenu5.setText("Menú");
         jMenu5.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+
+        jMenuItem17.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/contrasena.png"))); // NOI18N
+        jMenuItem17.setText("Cambiar Clave");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem17);
+
+        jMenuItem16.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iniciar-sesion.png"))); // NOI18N
+        jMenuItem16.setText("Cerrar Sesión");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem16);
 
         jMenuItem3.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/salir.png"))); // NOI18N
@@ -169,15 +212,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu10.add(jMenuItem5);
 
-        jMenuItem9.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/revisionPestamo.png"))); // NOI18N
-        jMenuItem9.setText("Revisar");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        menuItemRevisarP.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        menuItemRevisarP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/revisionPestamo.png"))); // NOI18N
+        menuItemRevisarP.setText("Revisar");
+        menuItemRevisarP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                menuItemRevisarPActionPerformed(evt);
             }
         });
-        jMenu10.add(jMenuItem9);
+        jMenu10.add(menuItemRevisarP);
 
         jMenuItem11.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modificarServicio.png"))); // NOI18N
@@ -225,15 +268,15 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem7);
 
-        jMenuItem8.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/revisionInversion.png"))); // NOI18N
-        jMenuItem8.setText("Revisar");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        menuItemRevisarI.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        menuItemRevisarI.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/revisionInversion.png"))); // NOI18N
+        menuItemRevisarI.setText("Revisar");
+        menuItemRevisarI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                menuItemRevisarIActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem8);
+        jMenu4.add(menuItemRevisarI);
 
         jMenuItem12.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modificarServicio.png"))); // NOI18N
@@ -256,6 +299,52 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.add(jMenuItem15);
 
         jMenuBar1.add(jMenu4);
+
+        menuUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Customers.png"))); // NOI18N
+        menuUsuarios.setText("Usuarios");
+        menuUsuarios.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+
+        jMenuItem18.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/registrarUsr.png"))); // NOI18N
+        jMenuItem18.setText("Registrar");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        menuUsuarios.add(jMenuItem18);
+
+        jMenuItem19.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/consultarUsr.png"))); // NOI18N
+        jMenuItem19.setText("Consultar");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        menuUsuarios.add(jMenuItem19);
+
+        jMenuItem20.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/acrualizarUsr.png"))); // NOI18N
+        jMenuItem20.setText("Actualizar");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        menuUsuarios.add(jMenuItem20);
+
+        jMenuItem21.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/visualziarUsr.png"))); // NOI18N
+        jMenuItem21.setText("Visualizar");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        menuUsuarios.add(jMenuItem21);
+
+        jMenuBar1.add(menuUsuarios);
 
         setJMenuBar(jMenuBar1);
 
@@ -298,10 +387,10 @@ public class Principal extends javax.swing.JFrame {
         centrarVentana(fci);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void menuItemRevisarIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRevisarIActionPerformed
         FrameRevisarInversion fri = new FrameRevisarInversion();
         centrarVentana(fri);
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_menuItemRevisarIActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         System.exit(0);
@@ -312,10 +401,10 @@ public class Principal extends javax.swing.JFrame {
         centrarVentana(fcp);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void menuItemRevisarPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRevisarPActionPerformed
         FrameRevisarPrestamo frp = new FrameRevisarPrestamo();
         centrarVentana(frp);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_menuItemRevisarPActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         FrameActualizarCliente fac = new FrameActualizarCliente();
@@ -347,6 +436,41 @@ public class Principal extends javax.swing.JFrame {
         centrarVentana(fap);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        this.setVisible(false);
+        Login lg = new Login();
+        lg.setLocationRelativeTo(null);
+        lg.setVisible(true);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        FrameCambioClave fcc = new FrameCambioClave(this, true);
+        Dimension dimension = VentanaPrincipal.getSize();
+        Dimension dFrame = fcc.getSize();
+        fcc.setLocation((dimension.width - dFrame.width)/2, (dimension.height - dFrame.height)/2);
+        fcc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        FrameVisualizarUsuario fvu = new FrameVisualizarUsuario();
+        centrarVentana(fvu);
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        FrameRegistrarUsuario fru = new FrameRegistrarUsuario();
+        centrarVentana(fru);
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        FrameConsultarUsuario fcu = new FrameConsultarUsuario();
+        centrarVentana(fcu);
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        FrameActualizarUsuario fau = new FrameActualizarUsuario();
+        centrarVentana(fau);
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
     public void centrarVentana(JInternalFrame frame){
         VentanaPrincipal.add(frame);
         Dimension dimension = VentanaPrincipal.getSize();
@@ -354,40 +478,10 @@ public class Principal extends javax.swing.JFrame {
         frame.setLocation((dimension.width - dFrame.width)/2, (dimension.height - dFrame.height)/2);
         frame.setVisible(true);
     }
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Principal().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JDesktopPane VentanaPrincipal;
+    public static final javax.swing.JDesktopPane VentanaPrincipal = new javax.swing.JDesktopPane();
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -408,13 +502,20 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem menuItemRevisarI;
+    private javax.swing.JMenuItem menuItemRevisarP;
+    private javax.swing.JMenu menuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

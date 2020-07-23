@@ -345,11 +345,11 @@ public class FrameVisualizarPrestamo extends javax.swing.JInternalFrame {
         gridBagConstraints.ipadx = 1200;
         gridBagConstraints.ipady = 165;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 20, 22, 11);
+        gridBagConstraints.insets = new java.awt.Insets(26, 20, 22, 11);
         jPanel1.add(PanelCardLayout, gridBagConstraints);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SECCIÓN POR:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
 
         grupoVista.add(rbFiador);
         rbFiador.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
@@ -385,7 +385,7 @@ public class FrameVisualizarPrestamo extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(rbFiador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rbGarantia)
@@ -400,7 +400,7 @@ public class FrameVisualizarPrestamo extends javax.swing.JInternalFrame {
         gridBagConstraints.ipadx = 46;
         gridBagConstraints.ipady = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(38, 20, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(18, 20, 0, 0);
         jPanel1.add(jPanel2, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -425,7 +425,7 @@ public class FrameVisualizarPrestamo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rbDenegadoActionPerformed
 
     private void txtCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyReleased
-        if (rbProceso.isSelected() == false || rbAprobado.isSelected() == false || rbDenegado.isSelected() == false || rbTodo.isSelected() == false){
+        if (rbProceso.isSelected() == false && rbAprobado.isSelected() == false && rbDenegado.isSelected() == false && rbTodo.isSelected() == false){
             vistaFiadorGarantia("", txtCedula.getText());
         }else{
             vistaFiadorGarantia(estado, txtCedula.getText());

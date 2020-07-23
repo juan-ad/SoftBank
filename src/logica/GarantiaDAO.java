@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GarantiaDAO {
     Conexion con = new Conexion();
@@ -13,6 +15,7 @@ public class GarantiaDAO {
     PreparedStatement ps;
     ResultSet rs;
     String sql;
+    private static final String errorDb = "No se pudo cerrar la conexion"; 
     
     public int codigoGarantia(){
         
@@ -27,12 +30,12 @@ public class GarantiaDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en seleccionar el código de la garantía");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return codigo;
@@ -51,12 +54,12 @@ public class GarantiaDAO {
             rpta = ps.executeUpdate();
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Registrar Garantía");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -75,14 +78,19 @@ public class GarantiaDAO {
             rpta = ps.executeUpdate();
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Actualizar Garantía");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
+    }
+    
+    public void errores(Exception ex, String error){
+        Logger.getLogger(getClass().getName()).log(
+        Level.WARNING, error ,ex);
     }
 }

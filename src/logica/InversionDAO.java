@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -18,6 +20,7 @@ public class InversionDAO {
     PreparedStatement ps;
     ResultSet rs;
     String sql;
+    private static final String errorDb = "No se pudo cerrar la conexion";
     
     public int nroCodigo(){
         int codigo = 0;
@@ -31,12 +34,12 @@ public class InversionDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en seleccionar el código de la inversión");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return codigo;
@@ -67,18 +70,18 @@ public class InversionDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Registrar Inversión");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+               errores(ex, errorDb);
             }
         }
         return rpta;
     }
     public DefaultTableModel revisarInversiones(JTable tabla){
-        tabla.setDefaultRenderer(Object.class, new imgTabla());
+        tabla.setDefaultRenderer(Object.class, new ImgTabla());
         DefaultTableModel modelo;
         String [] titulos = {"idIn","CÓDIGO","CLIENTE","CÉDULA","F.SOLICITUD","F.INICIO","F.TERMINO","INTERÉS","MONTO","DOCUMENTO"};
         Object [] registro = new Object [10];
@@ -87,15 +90,11 @@ public class InversionDAO {
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
         PdfEjecucion pd = new PdfEjecucion();
-        ImageIcon icono = new ImageIcon(pd.get_Image("/imagenes/32pdf.png"));
+        ImageIcon icono = new ImageIcon(pd.getImage("/imagenes/32pdf.png"));
                 
         sql = "SELECT t1.idInversion,t1.codInversion, t2.nombre, t2.apellido, t2.cedula, t3.fechaSolicitud, t3.fechaInicio, t3.fechaTermino, "
               +"t3.interes, t3.monto FROM inversion t1 JOIN persona t2 ON t1.inversionista = t2.idPersona JOIN beneficio t3 ON "
@@ -122,12 +121,12 @@ public class InversionDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Revisar Inversiones");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return modelo;
@@ -141,19 +140,19 @@ public class InversionDAO {
         try{
             acceso = con.conectar();
             ps = acceso.prepareStatement(sql);
-            ps.setString(1, inv.getFechaAprobación());
+            ps.setString(1, inv.getFechaAprobacion());
             ps.setString(2, inv.getEstado());
             ps.setInt(3, inv.getIdInversion());
             
             rpta = ps.executeUpdate();
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Aceptar Inversión");
         } finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -173,12 +172,12 @@ public class InversionDAO {
             rpta = ps.executeUpdate();
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Rechazar Inversión");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -212,12 +211,12 @@ public class InversionDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Consultar Inversión");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return consulta;
@@ -238,24 +237,22 @@ public class InversionDAO {
             ps.setInt(5, inv.getCodigo());
             
             rpta = ps.executeUpdate();
-            if (inv.getPdf() != null){
-                if(rpta != 0){
+            if (inv.getPdf() != null && rpta != 0){
+                               
+                PreparedStatement ps2 = acceso.prepareStatement(sql2);
+                ps2.setBytes(1, inv.getPdf());
+                ps2.setInt(2, inv.getCodigo());
                 
-                    PreparedStatement ps2 = acceso.prepareStatement(sql2);
-                    ps2.setBytes(1, inv.getPdf());
-                    ps2.setInt(2, inv.getCodigo());
-                
-                    rpta = ps2.executeUpdate();
-                }
+                rpta = ps2.executeUpdate();
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Actualizar Inversión");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return rpta;
@@ -272,11 +269,7 @@ public class InversionDAO {
             
             @Override
             public boolean isCellEditable(int filas, int columnas){
-                if(columnas== 1){
-                    return true;
-                }else{
-                    return false;
-                }
+                return columnas== 1;
             }
         };
                         
@@ -307,15 +300,19 @@ public class InversionDAO {
             }
             acceso.close();
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            errores(ex, "Error en la base de datos con Visualizar Inversiones");
         }finally {
             try {
                 acceso.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                errores(ex, errorDb);
             }
         }
         return modelo;
     }
    
+    public void errores(Exception ex, String error){
+        Logger.getLogger(getClass().getName()).log(
+        Level.WARNING, error ,ex);
+    }
 }

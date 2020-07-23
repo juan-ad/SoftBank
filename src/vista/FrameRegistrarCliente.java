@@ -255,13 +255,12 @@ public class FrameRegistrarCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
         if (txtNombre.getText().isEmpty() || txtCedula.getText().isEmpty() || txtApellido.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtDireccion.getText().isEmpty()){
             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
             JOptionPane.showMessageDialog(null,"Todos los campos son obligatorios","Campos Vacíos",JOptionPane.INFORMATION_MESSAGE, m);
         }else{
-            Cliente verificar = cd.consultarCliente(txtCedula.getText());// Se valida que la cédula del cliente a registrar no exista
-            if (verificar.getCedula() == null){
+            int verificar = cd.validarCedula(txtCedula.getText());// Se valida que la cédula del cliente a registrar no exista
+            if (verificar == 0){
                 registrarCliente();
             }else{
                 JOptionPane.showMessageDialog(null, "Ya existe un cliente registrado con ese número de cédula", "Cédula Repetida", JOptionPane.ERROR_MESSAGE);

@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -109,7 +111,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         PanelFiadorGarantia = new javax.swing.JPanel();
         PanelCardLayout = new javax.swing.JPanel();
         PanelGarantia = new javax.swing.JPanel();
-        txtubicacion = new javax.swing.JPanel();
+        panel78 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         btnAñadirGarantía = new javax.swing.JButton();
         txtUbicacion = new javax.swing.JTextField();
@@ -382,13 +384,13 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         PanelGarantia.setBackground(new java.awt.Color(255, 255, 255));
         PanelGarantia.setLayout(new java.awt.BorderLayout());
 
-        txtubicacion.setBackground(new java.awt.Color(255, 255, 255));
-        txtubicacion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtubicacion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel78.setBackground(new java.awt.Color(255, 255, 255));
+        panel78.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        panel78.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel13.setText("CÓDIGO:");
-        txtubicacion.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 30));
+        panel78.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 30));
 
         btnAñadirGarantía.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnAñadirGarantía.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/añadir.png"))); // NOI18N
@@ -403,43 +405,43 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
                 btnAñadirGarantíaActionPerformed(evt);
             }
         });
-        txtubicacion.add(btnAñadirGarantía, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        panel78.add(btnAñadirGarantía, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
 
         txtUbicacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUbicacionActionPerformed(evt);
             }
         });
-        txtubicacion.add(txtUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 150, -1));
+        panel78.add(txtUbicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 150, -1));
 
         jLabel16.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel16.setText("UBICACIÓN:");
-        txtubicacion.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 30));
+        panel78.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 30));
 
         txtValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtValorKeyTyped(evt);
             }
         });
-        txtubicacion.add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 150, -1));
+        panel78.add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 150, -1));
 
         jLabel15.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel15.setText("VALOR:");
-        txtubicacion.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 30));
+        panel78.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 30));
 
         txtTipo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtTipoKeyTyped(evt);
             }
         });
-        txtubicacion.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 150, -1));
+        panel78.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 150, -1));
 
         jLabel14.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         jLabel14.setText("TIPO:");
-        txtubicacion.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 30));
+        panel78.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 30));
 
         txtCodigoGarantia.setEditable(false);
-        txtubicacion.add(txtCodigoGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 99, -1));
+        panel78.add(txtCodigoGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 99, -1));
 
         btnCancelarGarantia.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btnCancelarGarantia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cancelar50px.png"))); // NOI18N
@@ -455,9 +457,9 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
                 btnCancelarGarantiaActionPerformed(evt);
             }
         });
-        txtubicacion.add(btnCancelarGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+        panel78.add(btnCancelarGarantia, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
 
-        PanelGarantia.add(txtubicacion, java.awt.BorderLayout.CENTER);
+        PanelGarantia.add(panel78, java.awt.BorderLayout.CENTER);
 
         PanelCardLayout.add(PanelGarantia, "card3");
 
@@ -968,14 +970,16 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
         } 
     }
     void guardarPdf(File ruta){
-       
+        
         try {
             byte[] pdf = new byte[(int) ruta.length()];
-            InputStream input = new FileInputStream(ruta);
+            InputStream input =new FileInputStream(ruta);
             input.read(pdf);
             p.setPdf(pdf);
+            input.close();
         } catch (IOException ex) {
-            System.out.println("Error al agregar archivo pdf "+ex.getMessage());
+            Logger.getLogger(getClass().getName()).log(
+            Level.WARNING, "Error al agregar archivo pdf",ex);
         }
     }
     
@@ -1048,6 +1052,7 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblFiador;
     private javax.swing.JLabel lblSolicitud;
+    private javax.swing.JPanel panel78;
     private javax.swing.JTextField txtCedulaCliente;
     private javax.swing.JTextField txtCedulaFiador;
     private javax.swing.JTextField txtCodigo;
@@ -1056,6 +1061,5 @@ public class FrameRegistrarPrestamo extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTipo;
     private javax.swing.JTextField txtUbicacion;
     private javax.swing.JTextField txtValor;
-    private javax.swing.JPanel txtubicacion;
     // End of variables declaration//GEN-END:variables
 }

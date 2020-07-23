@@ -2,6 +2,7 @@ package vista;
 
 import entidad.Cliente;
 import java.awt.Component;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import logica.ClienteDAO;
@@ -13,7 +14,6 @@ import logica.ClienteDAO;
 public class FrameActualizarCliente extends javax.swing.JInternalFrame {
 
     private ClienteDAO cd = new ClienteDAO();
-    private Cliente cli;
     public FrameActualizarCliente() {
         initComponents();
         bloquearDesbloquear(false);
@@ -21,7 +21,7 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
         lblMensaje.setText("");
         lblImagen.setText("");
     }
-    
+    private Icon m;
     ImageIcon rojo = new ImageIcon(getClass().getResource("/imagenes/mensajeN.png"));
     ImageIcon azul = new ImageIcon(getClass().getResource("/imagenes/mensajeE.png"));
     @SuppressWarnings("unchecked")
@@ -31,7 +31,7 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
 
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        PanelDatos = new javax.swing.JPanel();
+        panelDatos = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -69,9 +69,9 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
         gridBagConstraints.insets = new java.awt.Insets(20, 90, 0, 0);
         jPanel4.add(jLabel7, gridBagConstraints);
 
-        PanelDatos.setBackground(new java.awt.Color(255, 255, 255));
-        PanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
-        PanelDatos.setFocusable(false);
+        panelDatos.setBackground(new java.awt.Color(255, 255, 255));
+        panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
+        panelDatos.setFocusable(false);
 
         jLabel5.setFont(new java.awt.Font("Arial Black", 1, 11)); // NOI18N
         jLabel5.setText("NOMBRES: ");
@@ -118,45 +118,45 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout PanelDatosLayout = new javax.swing.GroupLayout(PanelDatos);
-        PanelDatos.setLayout(PanelDatosLayout);
-        PanelDatosLayout.setHorizontalGroup(
-            PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelDatosLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
+        panelDatos.setLayout(panelDatosLayout);
+        panelDatosLayout.setHorizontalGroup(
+            panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelDatosLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(txtNombre))
-                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTelefono))
-                    .addGroup(PanelDatosLayout.createSequentialGroup()
+                    .addGroup(panelDatosLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        PanelDatosLayout.setVerticalGroup(
-            PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelDatosLayout.createSequentialGroup()
+        panelDatosLayout.setVerticalGroup(
+            panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDatosLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel3)
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
-                .addGroup(PanelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
@@ -171,7 +171,7 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
         gridBagConstraints.ipady = 30;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 30, 0, 0);
-        jPanel4.add(PanelDatos, gridBagConstraints);
+        jPanel4.add(panelDatos, gridBagConstraints);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OPCIONES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 1, 12))); // NOI18N
@@ -448,7 +448,7 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
     
     void actualizarCliente(){
         
-        cli = new Cliente();
+        Cliente cli = new Cliente();
         cli.setCedula(txtCedula.getText());
         cli.setNombre(txtNombre.getText());
         cli.setApellido(txtApellido.getText());
@@ -456,7 +456,8 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
         cli.setTelefono(txtTelefono.getText());
         
         if (cd.actualizarCliente(cli) > 0){
-            JOptionPane.showMessageDialog(null, "Cliente Actualizado Satisfactoriamente");
+            m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
+            JOptionPane.showMessageDialog(null, "Cliente Actualizado Satisfactoriamente","Actualización",JOptionPane.INFORMATION_MESSAGE,m);
         }else{
             JOptionPane.showMessageDialog(null, "No se pudo actualizar");
         }
@@ -469,21 +470,21 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
     
     void bloquearDesbloquear(Boolean parametro){
      
-        for (Component a: PanelDatos.getComponents()){
+        for (Component a: panelDatos.getComponents()){
             a.setEnabled(parametro);
         }
     }
     
     void camposVacios(){
         
-        if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtDireccion.equals("") || txtTelefono.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+        if(txtNombre.getText().equals("") || txtApellido.getText().equals("") || txtDireccion.getText().equals("") || txtTelefono.getText().equals("")){
+            m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios","Campos Vacíos",JOptionPane.INFORMATION_MESSAGE,m);
         }else{
             actualizarCliente();
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelDatos;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -499,6 +500,7 @@ public class FrameActualizarCliente extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblMensaje;
+    private javax.swing.JPanel panelDatos;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDireccion;

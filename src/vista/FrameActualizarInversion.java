@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ public class FrameActualizarInversion extends javax.swing.JInternalFrame {
     private InversionDAO id = new InversionDAO();
     private Inversion inv;
     private String ruta_archivo= "";
+    private Icon m;
     public FrameActualizarInversion() {
         initComponents();
         lblMensaje.setText("");
@@ -412,6 +414,28 @@ public class FrameActualizarInversion extends javax.swing.JInternalFrame {
         lblArchivo.setText("");
     }
     
+    int visualizarInteres(String in){
+        int v=-1;
+        switch(in){
+            case "1.0%":
+                v=0;
+                break;
+            case "1.5%":
+                v=1;
+                break;
+            case "2.0%":
+                v=2;
+                break;
+            case "2.5%":
+                v=3;
+                break;
+            case "3.0%":
+                v=4;
+                break;
+        }
+        return v;
+    }
+    
     void consultarInversion(){
         String [] buscada= id.consultarInversion(Integer.parseInt(txtCodigo.getText()),"En Proceso");
         if (buscada[0] == null){
@@ -429,7 +453,7 @@ public class FrameActualizarInversion extends javax.swing.JInternalFrame {
             lblSolicitud.setText(buscada[2]);
             fechaInicio.setDate(formatoFecha(buscada[3]));
             fechaTermino.setDate(formatoFecha(buscada[4]));
-            comboInteres.setSelectedItem(buscada[5]);
+            comboInteres.setSelectedIndex(visualizarInteres(buscada[5]));
             lblArchivo.setText("Inversión #"+" "+txtCodigo.getText());
             txtMonto.setText(buscada[6].substring(1,buscada[6].length()));
         }
@@ -448,7 +472,8 @@ public class FrameActualizarInversion extends javax.swing.JInternalFrame {
             guardarPdf(ruta);   
         }
         if (id.actualizarInversion(inv) > 0){
-            JOptionPane.showMessageDialog(null, "Inversión Actualizada Satisfactoriamente");
+            m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
+            JOptionPane.showMessageDialog(null, "Inversión Actualizada Satisfactoriamente","Actualziación",JOptionPane.INFORMATION_MESSAGE,m);
         }else{
             JOptionPane.showMessageDialog(null, "No se pudo actualizar");
         }
@@ -516,7 +541,8 @@ public class FrameActualizarInversion extends javax.swing.JInternalFrame {
     void camposVacios(){
         
         if(fechaInicio.getDate() == null || fechaTermino.getDate() == null || txtMonto.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+            m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios","Campos Vacíos",JOptionPane.INFORMATION_MESSAGE,m);
         }else{
             if(verificarFechas() == true){
                 actualizarInversion();

@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -37,7 +38,8 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
     private ImageIcon rojo = new ImageIcon(getClass().getResource("/imagenes/mensajeN.png"));
     private ImageIcon azul = new ImageIcon(getClass().getResource("/imagenes/mensajeE.png"));
     private Garantia g;
-    private Cliente f;
+    private Cliente f = new Cliente();
+    private Icon m;
     public FrameActualizarPrestamo() {
         initComponents();
         vistaInicial();
@@ -611,6 +613,27 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
         }
     }
     
+    int visualizarInteres(String in){
+        int v=-1;
+        switch(in){
+            case "1.0%":
+                v=0;
+                break;
+            case "1.5%":
+                v=1;
+                break;
+            case "2.0%":
+                v=2;
+                break;
+            case "2.5%":
+                v=3;
+                break;
+            case "3.0%":
+                v=4;
+                break;
+        }
+        return v;
+    }
     void consultarFiador(){
         f = cd.consultarCliente(txtCedulaFiador.getText());
                
@@ -676,6 +699,7 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
     void visualizarPrestamo(Prestamo p){
         String [] consulta;
         if (p.getFiador() != 0){
+            f.setIdPersona(p.getFiador());
             PanelCard.add(panelFiador,"fiador");
             vista.show(PanelCard,"fiador");   
             consulta = pd.consultarPrestamoFiador(Integer.parseInt(txtCodigo.getText()),"En Proceso");
@@ -684,7 +708,7 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
             lblSolicitud.setText(consulta[2]);
             fechaInicio.setDate(formatoFecha(consulta[3]));
             fechaTermino.setDate(formatoFecha(consulta[4]));
-            comboInteres.setSelectedItem(consulta[5]);
+            comboInteres.setSelectedIndex(visualizarInteres(consulta[5]));
             txtMonto.setText(consulta[6].substring(1,consulta[6].length()));
             txtCedulaFiador.setText(consulta[9]);
             lblFiador.setText(consulta[10]);
@@ -697,7 +721,7 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
             lblSolicitud.setText(consulta[2]);
             fechaInicio.setDate(formatoFecha(consulta[3]));
             fechaTermino.setDate(formatoFecha(consulta[4]));
-            comboInteres.setSelectedItem(consulta[5]);
+            comboInteres.setSelectedIndex(visualizarInteres(consulta[5]));
             txtMonto.setText(consulta[6].substring(1,consulta[6].length()));
             txtGarantia.setText(consulta[10]);
             txtValor.setText(consulta[11].substring(1,consulta[11].length()));
@@ -763,7 +787,8 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
     void camposVacios(){
         
         if(fechaInicio.getDate() == null || fechaTermino.getDate() == null || txtMonto.getText().equals("") || camposFiadorGarantia()){
-            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+            m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
+            JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios","Campos Vacíos",JOptionPane.INFORMATION_MESSAGE,m);
         }else{
             if(verificarFechas() == true){
                 prestatarioIgualFiador();
@@ -816,7 +841,8 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
             guardarPdf(ruta);   
         }
         if (pd.actualizarPrestamoFiador(p) > 0){
-            JOptionPane.showMessageDialog(null, "Préstamo Actualizado Satisfactoriamente");
+            m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
+            JOptionPane.showMessageDialog(null, "Préstamo Actualizado Satisfactoriamente","Actualziación",JOptionPane.INFORMATION_MESSAGE,m);
         }
     }
     
@@ -838,7 +864,8 @@ public class FrameActualizarPrestamo extends javax.swing.JInternalFrame {
         }
         if (gd.actualizarGarantia(g, p.getCodigo()) != 0){
             if (pd.actualizarPrestamoGarantia(p) > 0){
-                JOptionPane.showMessageDialog(null, "Préstamo Actualizado Satisfactoriamente");
+                m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
+                JOptionPane.showMessageDialog(null, "Préstamo Actualizado Satisfactoriamente","Actualziación",JOptionPane.INFORMATION_MESSAGE,m);
             }
         }
         

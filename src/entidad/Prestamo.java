@@ -9,10 +9,6 @@ public class Prestamo extends Beneficio {
     private int garantia;
     private byte[] pdf;
     
-    public Prestamo(){
-        
-    }
-
     public byte[] getPdf() {
         return pdf;
     }

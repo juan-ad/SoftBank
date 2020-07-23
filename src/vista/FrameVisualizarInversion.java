@@ -267,7 +267,7 @@ public class FrameVisualizarInversion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_rbProcesoActionPerformed
 
     private void txtCedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyReleased
-        if (rbProceso.isSelected() == false || rbAprobado.isSelected() == false || rbDenegado.isSelected() == false || rbTodo.isSelected() == false){
+        if (rbProceso.isSelected() == false && rbAprobado.isSelected() == false && rbDenegado.isSelected() == false && rbTodo.isSelected() == false){
             visualizar("", txtCedula.getText());
         }else{
             visualizar(estado, txtCedula.getText());

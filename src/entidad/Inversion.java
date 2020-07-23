@@ -6,10 +6,7 @@ public class Inversion extends Beneficio{
     private int codigo;
     private int inversionista;
     private byte [] pdf;
-    public Inversion(){
-        
-    }
-
+  
     public byte[] getPdf() {
         return pdf;
     }

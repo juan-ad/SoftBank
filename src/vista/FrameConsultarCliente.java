@@ -10,7 +10,7 @@ import logica.ClienteDAO;
 public class FrameConsultarCliente extends javax.swing.JInternalFrame {
     
     ClienteDAO cd;
-    Cliente c;
+    Cliente c ;
     private Icon m ;
     public FrameConsultarCliente() {
         initComponents();

@@ -226,7 +226,7 @@ public class FrameRevisarInversion extends javax.swing.JInternalFrame {
             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
             JOptionPane.showMessageDialog(null, "Debe seleccionar una inversion", "Inversión NO Seleccionada", JOptionPane.INFORMATION_MESSAGE, m);
         }else{
-            inv.setFechaAprobación(generarFecha());
+            inv.setFechaAprobacion(generarFecha());
             inv.setEstado("Aprobado");
             if (ind.aceptarInversion(inv) != 0){
                 m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
@@ -263,7 +263,7 @@ public class FrameRevisarInversion extends javax.swing.JInternalFrame {
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 JButton boton = (JButton) value;
-                pd.ejecutar_archivoPDF(Integer.parseInt(id),"Inversion");
+                pd.ejecutarArchivoPDF(Integer.parseInt(id),"Inversion");
                 try {
                      Desktop.getDesktop().open(new File("Inversion#"+codigo+".pdf"));
                 }catch (IOException ex) {

@@ -395,7 +395,7 @@ public class FrameRevisarPrestamo extends javax.swing.JInternalFrame {
             m = new ImageIcon(getClass().getResource("/imagenes/digitar.png"));
             JOptionPane.showMessageDialog(null, "Debe seleccionar un préstamo", "Préstamo NO Seleccionado", JOptionPane.INFORMATION_MESSAGE, m);
         }else{
-            p.setFechaAprobación(generarFecha());
+            p.setFechaAprobacion(generarFecha());
             p.setEstado("Aprobado");
             if (pd.aceptarPrestamo(p) >0 ){
                 m = new ImageIcon(getClass().getResource("/imagenes/exito.png"));
@@ -485,7 +485,7 @@ public class FrameRevisarPrestamo extends javax.swing.JInternalFrame {
         if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 JButton boton = (JButton) value;
-                pe.ejecutar_archivoPDF(id,"Prestamo");
+                pe.ejecutarArchivoPDF(id,"Prestamo");
                 try {
                      Desktop.getDesktop().open(new File("Prestamo#"+codigo+".pdf"));
                 }catch (IOException ex) {
